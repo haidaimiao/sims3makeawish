@@ -360,57 +360,28 @@
   <div class="footer">© 2026 海带的模3人物许愿池 | 个人捏人作品展示</div>
 
 <script>
-const LIKE_API = "https://api.likecounter.dev";
-const SITE_ID = "haidaimiao-sims3makeawish";
-
-async function loadLikeCount() {
-  try {
-    const res = await fetch(`${LIKE_API}/get/${SITE_ID}`);
-    const data = await res.json();
-    const counts = data.counts || {};
-
-    document.querySelectorAll(".card").forEach(card => {
-      const id = card.dataset.id;
-      const count = counts[id] || 0;
-      card.querySelector(".like-count").textContent = count;
-    });
-
-    const liked = JSON.parse(localStorage.getItem("likedIds") || "[]");
-    liked.forEach(id => {
-      const btn = document.querySelector(`.card[data-id="${id}"] .like-btn`);
-      if (btn) {
-        btn.classList.add("liked");
-        btn.disabled = true;
-        btn.innerHTML = `❤️ <span class="like-count">${btn.querySelector(".like-count").textContent}</span> 已点赞`;
-      }
-    });
-  } catch (e) {
-    console.log("加载点赞失败");
-  }
-}
-
-async function likeThis(btn, id) {
-  const liked = JSON.parse(localStorage.getItem("likedIds") || "[]");
-  if (liked.includes(id)) {
-    alert("你已经给这个人物点过赞啦～");
+// 点赞功能（纯本地稳定版，无接口，不报错，所有人可用）
+function likeThis(btn, id) {
+  const likedIds = JSON.parse(localStorage.getItem('likedCharacterIds') || '[]');
+  
+  if (likedIds.includes(id)) {
+    alert('你已经给这个人物点过赞啦～');
     return;
   }
 
-  liked.push(id);
-  localStorage.setItem("likedIds", JSON.stringify(liked));
+  likedIds.push(id);
+  localStorage.setItem('likedCharacterIds', JSON.stringify(likedIds));
 
-  try {
-    await fetch(`${LIKE_API}/like/${SITE_ID}/${id}`, { method: "POST" });
-    const countEl = btn.querySelector(".like-count");
-    countEl.textContent = parseInt(countEl.textContent) + 1;
-    btn.classList.add("liked");
-    btn.innerHTML = `❤️ <span class="like-count">${countEl.textContent}</span> 已点赞`;
-    btn.disabled = true;
-  } catch (e) {
-    alert("点赞失败，请稍后再试");
-  }
+  const countEl = btn.querySelector('.like-count');
+  let count = parseInt(countEl.textContent) || 0;
+  countEl.textContent = count + 1;
+
+  btn.classList.add('liked');
+  btn.innerHTML = `❤️ <span class="like-count">${count + 1}</span> 已点赞`;
+  btn.disabled = true;
 }
 
+// 筛选功能
 function filter(type) {
   const cards = document.querySelectorAll('.card');
   const btns = document.querySelectorAll('.filter-btn');
@@ -419,7 +390,7 @@ function filter(type) {
   let visibleCount = 0;
   
   btns.forEach(btn => btn.classList.remove('active'));
-  if (event.target) event.target.classList.add('active');
+  if (event && event.target) event.target.classList.add('active');
   
   cards.forEach(card => {
     const gender = card.dataset.gender;
@@ -438,7 +409,21 @@ function filter(type) {
   cardContainer.style.display = visibleCount === 0 ? 'none' : 'grid';
 }
 
-window.onload = loadLikeCount;
+// 页面加载时恢复已点赞状态
+window.onload = function() {
+  filter('all');
+  const likedIds = JSON.parse(localStorage.getItem('likedCharacterIds') || '[]');
+  likedIds.forEach(id => {
+    const btn = document.querySelector(`.card[data-id="${id}"] .like-btn`);
+    if (btn) {
+      const countEl = btn.querySelector('.like-count');
+      let count = parseInt(countEl.textContent) || 0;
+      btn.classList.add('liked');
+      btn.innerHTML = `❤️ <span class="like-count">${count}</span> 已点赞`;
+      btn.disabled = true;
+    }
+  });
+};
 </script>
 </body>
 </html>
