@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>海带的模3人物许愿池</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    }
+
+    body {
+      background-color: #fcfcfc;
+      color: #333;
+      padding: 15px;
+      line-height: 1.6;
+    }
+
+    .header {
+      text-align: center;
+      margin: 30px 0;
+      padding: 0 10px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    .header p {
+      font-size: 16px;
+      color: #9ca3af;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    /* 社交按钮：每个一个独立马卡龙色系！无红底！*/
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 14px;
+      text-decoration: none;
+      color: #ffffff;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .social-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .xiaohongshu { background-color: #D095B0; }
+    .bilibili    { background-color: #E8849F; }
+    .download    { background-color: #EDA2B4; color:#fff; }
+
+    /* 筛选按钮：每个都不同柔和色，区分明显！*/
+    .filter-bar {
+      max-width: 1200px;
+      margin: 0 auto 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .filter-btn {
+      padding: 9px 18px;
+      border: none;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+    .filter-btn.active {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    .filter-all   { background: #F9D9E3; color:#725665; }
+    .filter-girl  { background: #EEC2D4; color:#725665; }
+    .filter-boy   { background: #D095B0; }
+    .filter-2024  { background: #EDA2B4; }
+    .filter-2025  { background: #E8849F; }
+    .filter-2026  { background: #b89fbc; color:#fff; } /* 同色系浅紫，柔和不红 */
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 22px;
+      padding: 0 10px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .card-info { padding: 18px; }
+    .card-name {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #6b7280;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* 标签：统一浅色，不抢戏 */
+    .tag {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #555;
+      font-weight: 500;
+      background: #f0f0f0;
+    }
+    .tag-year { background: #EEC2D4; color:#725665; }
+    .tag-noshare { background: #D095B0; color:#fff; }
+
+    .card-desc {
+      font-size: 14px;
+      color: #9ca3af;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    /* 点赞按钮：独立柔和色 */
+    .like-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #F9D9E3;
+      border: 1px solid #f1d2e0;
+      color: #886a79;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+    .like-btn:hover { background: #fce6ef; }
+    .like-btn.liked { background: #E8849F; border-color:#E8849F; color:#fff; }
+
+    .like-count { font-weight: 600; }
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 20px 0;
+      color: #d1d5db;
+      font-size: 14px;
+      border-top: 1px solid #f5f5f5;
+    }
+    .empty-tip {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      color: #9ca3af;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 24px; }
+      .container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:18px; }
+      .card-img { height:320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>海带的模3人物许愿池</h1>
+    <p>每月选取当月点赞量最高的人物进行分享</p>
+
+    <div class="social-links">
+      <a class="social-btn xiaohongshu" href="https://www.xiaohongshu.com/user/profile/6388c581000000001f015765?tab=note" target="_blank">📕 小红书</a>
+      <a class="social-btn bilibili" href="https://space.bilibili.com/3493090843167330" target="_blank">📺 B站</a>
+      <a class="social-btn download" href="https://haidaimiao.github.io/sims3-sims-share/" target="_blank">📥 人物下载</a>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn filter-all active" onclick="filter('all')">全部</button>
+      <button class="filter-btn filter-girl" onclick="filter('girl')">女生</button>
+      <button class="filter-btn filter-boy" onclick="filter('boy')">男生</button>
+      <button class="filter-btn filter-2024" onclick="filter('2024')">2024年</button>
+      <button class="filter-btn filter-2025" onclick="filter('2025')">2025年</button>
+      <button class="filter-btn filter-2026" onclick="filter('2026')">2026年</button>
+    </div>
+  </div>
+
+  <div class="empty-tip" id="emptyTip">暂无符合条件的人物~</div>
+
+  <div class="container" id="cardContainer">
+    <div class="card" data-id="1" data-gender="girl" data-year="2026" data-share="noshare">
+      <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peaOswn.png" alt="小蓝莓">
+      <div class="card-info">
+        <div class="card-name">小蓝莓</div>
+        <div class="card-tags">
+          <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2026</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 仙子 / 清透感，薄雾浆果</div>
+        <button class="like-btn" onclick="likeThis(this, 1)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+
+    <div class="card" data-id="2" data-gender="girl" data-year="2026" data-share="noshare">
+      <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peaj7RK.png" alt="可爱妹">
+      <div class="card-info">
+        <div class="card-name">可爱妹</div>
+        <div class="card-tags">
+          <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2026</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 人类 / 可爱感，无糖牛奶巧克力</div>
+        <button class="like-btn" onclick="likeThis(this, 2)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+
+    <div class="card" data-id="3" data-gender="girl" data-year="2026" data-share="noshare">
+      <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peajqMD.md.png" alt="海音·德·拉罗什">
+      <div class="card-info">
+        <div class="card-name">海音·德·拉罗什</div>
+        <div class="card-tags">
+         <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2026</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 人类 / 御姐，二代旁支</div>
+        <button class="like-btn" onclick="likeThis(this, 3)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+
+    <div class="card" data-id="4" data-gender="girl" data-year="2025" data-share="noshare">
+      <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peajHxO.png" alt="可可">
+      <div class="card-info">
+        <div class="card-name">可可</div>
+        <div class="card-tags">
+          <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2025</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 人类 / 海盐色，桥港公务员</div>
+        <button class="like-btn" onclick="likeThis(this, 4)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+
+    <div class="card" data-id="5" data-gender="girl" data-year="2025" data-share="noshare">
+      <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peajoPx.md.png" alt="小美人鱼">
+      <div class="card-info">
+        <div class="card-name">小美人鱼</div>
+        <div class="card-tags">
+          <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2025</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 小美人鱼 / 天堂岛，小樱花出的cos</div>
+        <button class="like-btn" onclick="likeThis(this, 5)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+ 
+    <div class="card" data-id="7" data-gender="girl" data-year="2025" data-share="noshare">
+      <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/kvOuzQcV.png" alt="戴娃">
+      <div class="card-info">
+        <div class="card-name">戴娃</div>
+        <div class="card-tags">
+          <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2025</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 人类 /灵感缪斯，戴娃·卡塞尔</div>
+        <button class="like-btn" onclick="likeThis(this, 7)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+
+    <div class="card" data-id="8" data-gender="girl" data-year="2025" data-share="noshare">
+      <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/M8aeXmqJ.png" alt="真真">
+      <div class="card-info">
+        <div class="card-name">真真</div>
+        <div class="card-tags">
+          <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2025</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 人类 /双子溪，落魄千金</div>
+        <button class="like-btn" onclick="likeThis(this, 8)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+
+    <div class="card" data-id="9" data-gender="girl" data-year="2025" data-share="noshare">
+      <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/C5f8tVLr.png" alt="埃拉拉·德·拉罗什">
+      <div class="card-info">
+        <div class="card-name">埃拉拉·德·拉罗什</div>
+        <div class="card-tags">
+         <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2025</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 吸血鬼 / 巫师，二代继承人</div>
+        <button class="like-btn" onclick="likeThis(this, 9)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+
+    <div class="card" data-id="10" data-gender="girl" data-year="2025" data-share="noshare">
+      <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/CQPPMNE4.png" alt="塞拉菲娜·德·拉罗什">
+      <div class="card-info">
+        <div class="card-name">塞拉菲娜·德·拉罗什</div>
+        <div class="card-tags">
+         <span class="tag tag-girl">女生</span>
+          <span class="tag tag-year">2025</span>
+          <span class="tag tag-style">原创人物</span>
+          <span class="tag tag-noshare">未分享</span>
+        </div>
+        <div class="card-desc">原创 / 人类 / 修女，四代幺女</div>
+        <button class="like-btn" onclick="likeThis(this, 10)">❤️ <span class="like-count">0</span> 点赞</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">© 2026 海带的模3人物许愿池 | 个人捏人作品展示</div>
+
+  <script>
+    function filter(type) {
+      const cards = document.querySelectorAll('.card');
+      const btns = document.querySelectorAll('.filter-btn');
+      const emptyTip = document.getElementById('emptyTip');
+      const cardContainer = document.getElementById('cardContainer');
+      let visibleCount = 0;
+      
+      btns.forEach(btn => btn.classList.remove('active'));
+      if (event.target) event.target.classList.add('active');
+      
+      cards.forEach(card => {
+        const gender = card.dataset.gender;
+        const year = card.dataset.year;
+        let isShow = false;
+        
+        if (type === 'all') isShow = true;
+        else if (type === 'girl' || type === 'boy') isShow = (gender === type);
+        else isShow = (year === type);
+        
+        card.style.display = isShow ? 'block' : 'none';
+        if (isShow) visibleCount++;
+      });
+      
+      if (visibleCount === 0) {
+        emptyTip.style.display = 'block';
+        cardContainer.style.display = 'none';
+      } else {
+        emptyTip.style.display = 'none';
+        cardContainer.style.display = 'grid';
+      }
+    }
+
+    function likeThis(btn, id) {
+      const likedIds = JSON.parse(localStorage.getItem('likedCharacterIds') || '[]');
+      if (likedIds.includes(id)) {
+        alert('你已经给这个人物点过赞啦～');
+        return;
+      }
+      likedIds.push(id);
+      localStorage.setItem('likedCharacterIds', JSON.stringify(likedIds));
+      const countEl = btn.querySelector('.like-count');
+      let count = parseInt(countEl.textContent);
+      countEl.textContent = count + 1;
+      btn.classList.add('liked');
+      btn.innerHTML = `❤️ <span class="like-count">${count + 1}</span> 已点赞`;
+      btn.disabled = true;
+    }
+
+    window.onload = function() {
+      filter('all');
+      const likedIds = JSON.parse(localStorage.getItem('likedCharacterIds') || '[]');
+      likedIds.forEach(id => {
+        const btn = document.querySelector(`.card[data-id="${id}"] .like-btn`);
+        if (btn) {
+          const countEl = btn.querySelector('.like-count');
+          let count = parseInt(countEl.textContent);
+          countEl.textContent = count + 1;
+          btn.classList.add('liked');
+          btn.innerHTML = `❤️ <span class="like-count">${count + 1}</span> 已点赞`;
+          btn.disabled = true;
+        }
+      });
+    };
+  </script>
+</body>
+</html>
