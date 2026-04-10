@@ -46,7 +46,6 @@
       flex-wrap: wrap;
     }
 
-    /* 社交按钮：每个一个独立马卡龙色系！无红底！*/
     .social-btn {
       display: inline-flex;
       align-items: center;
@@ -67,7 +66,6 @@
     .bilibili    { background-color: #E8849F; }
     .download    { background-color: #EDA2B4; color:#fff; }
 
-    /* 筛选按钮：每个都不同柔和色，区分明显！*/
     .filter-bar {
       max-width: 1200px;
       margin: 0 auto 30px;
@@ -95,7 +93,7 @@
     .filter-boy   { background: #D095B0; }
     .filter-2024  { background: #EDA2B4; }
     .filter-2025  { background: #E8849F; }
-    .filter-2026  { background: #b89fbc; color:#fff; } /* 同色系浅紫，柔和不红 */
+    .filter-2026  { background: #b89fbc; color:#fff; }
 
     .container {
       max-width: 1280px;
@@ -140,7 +138,6 @@
       flex-wrap: wrap;
     }
 
-    /* 标签：统一浅色，不抢戏 */
     .tag {
       padding: 4px 10px;
       border-radius: 12px;
@@ -159,7 +156,6 @@
       margin-bottom: 12px;
     }
 
-    /* 点赞按钮：独立柔和色 */
     .like-btn {
       display: inline-flex;
       align-items: center;
@@ -204,10 +200,10 @@
 
   <div class="header">
     <h1>海带的模3人物许愿池</h1>
-    <p>每月选取当月点赞量最高的人物进行分享</p>
+    <p>高赞人物也许会出现在下载区哦~快来pick你的心动人物</p>
 
     <div class="social-links">
-      <a class="social-btn xiaohongshu" href="https://www.xiaohongshu.com/user/profile/6388c581000000001f015765?tab=note" target="_blank">📕 小红书</a>
+      <a class="social-btn xiaohongshu" href="https://www.xiaohongshu.com/user/profile/6388c581000000001f015765" target="_blank">📕 小红书</a>
       <a class="social-btn bilibili" href="https://space.bilibili.com/3493090843167330" target="_blank">📺 B站</a>
       <a class="social-btn download" href="https://haidaimiao.github.io/sims3-sims-share/" target="_blank">📥 人物下载</a>
     </div>
@@ -299,7 +295,7 @@
         <button class="like-btn" onclick="likeThis(this, 5)">❤️ <span class="like-count">0</span> 点赞</button>
       </div>
     </div>
- 
+
     <div class="card" data-id="7" data-gender="girl" data-year="2025" data-share="noshare">
       <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/kvOuzQcV.png" alt="戴娃">
       <div class="card-info">
@@ -363,70 +359,86 @@
 
   <div class="footer">© 2026 海带的模3人物许愿池 | 个人捏人作品展示</div>
 
-  <script>
-    function filter(type) {
-      const cards = document.querySelectorAll('.card');
-      const btns = document.querySelectorAll('.filter-btn');
-      const emptyTip = document.getElementById('emptyTip');
-      const cardContainer = document.getElementById('cardContainer');
-      let visibleCount = 0;
-      
-      btns.forEach(btn => btn.classList.remove('active'));
-      if (event.target) event.target.classList.add('active');
-      
-      cards.forEach(card => {
-        const gender = card.dataset.gender;
-        const year = card.dataset.year;
-        let isShow = false;
-        
-        if (type === 'all') isShow = true;
-        else if (type === 'girl' || type === 'boy') isShow = (gender === type);
-        else isShow = (year === type);
-        
-        card.style.display = isShow ? 'block' : 'none';
-        if (isShow) visibleCount++;
-      });
-      
-      if (visibleCount === 0) {
-        emptyTip.style.display = 'block';
-        cardContainer.style.display = 'none';
-      } else {
-        emptyTip.style.display = 'none';
-        cardContainer.style.display = 'grid';
-      }
-    }
+<script>
+const LIKE_API = "https://api.likecounter.dev";
+const SITE_ID = "haidaimiao-sims3makeawish";
 
-    function likeThis(btn, id) {
-      const likedIds = JSON.parse(localStorage.getItem('likedCharacterIds') || '[]');
-      if (likedIds.includes(id)) {
-        alert('你已经给这个人物点过赞啦～');
-        return;
-      }
-      likedIds.push(id);
-      localStorage.setItem('likedCharacterIds', JSON.stringify(likedIds));
-      const countEl = btn.querySelector('.like-count');
-      let count = parseInt(countEl.textContent);
-      countEl.textContent = count + 1;
-      btn.classList.add('liked');
-      btn.innerHTML = `❤️ <span class="like-count">${count + 1}</span> 已点赞`;
-      btn.disabled = true;
-    }
+async function loadLikeCount() {
+  try {
+    const res = await fetch(`${LIKE_API}/get/${SITE_ID}`);
+    const data = await res.json();
+    const counts = data.counts || {};
 
-    window.onload = function() {
-      filter('all');
-      const likedIds = JSON.parse(localStorage.getItem('likedCharacterIds') || '[]');
-      likedIds.forEach(id => {
-        const btn = document.querySelector(`.card[data-id="${id}"] .like-btn`);
-        if (btn) {
-          const countEl = btn.querySelector('.like-count');
-          let count = parseInt(countEl.textContent);
-          countEl.textContent = count + 1;
-          btn.classList.add('liked');
-          btn.innerHTML = `❤️ <span class="like-count">${count + 1}</span> 已点赞`;
-          btn.disabled = true;
-        }
-      });
-    };
-  </script>
+    document.querySelectorAll(".card").forEach(card => {
+      const id = card.dataset.id;
+      const count = counts[id] || 0;
+      card.querySelector(".like-count").textContent = count;
+    });
+
+    const liked = JSON.parse(localStorage.getItem("likedIds") || "[]");
+    liked.forEach(id => {
+      const btn = document.querySelector(`.card[data-id="${id}"] .like-btn`);
+      if (btn) {
+        btn.classList.add("liked");
+        btn.disabled = true;
+        btn.innerHTML = `❤️ <span class="like-count">${btn.querySelector(".like-count").textContent}</span> 已点赞`;
+      }
+    });
+  } catch (e) {
+    console.log("加载点赞失败");
+  }
+}
+
+async function likeThis(btn, id) {
+  const liked = JSON.parse(localStorage.getItem("likedIds") || "[]");
+  if (liked.includes(id)) {
+    alert("你已经给这个人物点过赞啦～");
+    return;
+  }
+
+  liked.push(id);
+  localStorage.setItem("likedIds", JSON.stringify(liked));
+
+  try {
+    await fetch(`${LIKE_API}/like/${SITE_ID}/${id}`, { method: "POST" });
+    const countEl = btn.querySelector(".like-count");
+    countEl.textContent = parseInt(countEl.textContent) + 1;
+    btn.classList.add("liked");
+    btn.innerHTML = `❤️ <span class="like-count">${countEl.textContent}</span> 已点赞`;
+    btn.disabled = true;
+  } catch (e) {
+    alert("点赞失败，请稍后再试");
+  }
+}
+
+function filter(type) {
+  const cards = document.querySelectorAll('.card');
+  const btns = document.querySelectorAll('.filter-btn');
+  const emptyTip = document.getElementById('emptyTip');
+  const cardContainer = document.getElementById('cardContainer');
+  let visibleCount = 0;
+  
+  btns.forEach(btn => btn.classList.remove('active'));
+  if (event.target) event.target.classList.add('active');
+  
+  cards.forEach(card => {
+    const gender = card.dataset.gender;
+    const year = card.dataset.year;
+    let isShow = false;
+    
+    if (type === 'all') isShow = true;
+    else if (type === 'girl' || type === 'boy') isShow = (gender === type);
+    else isShow = (year === type);
+    
+    card.style.display = isShow ? 'block' : 'none';
+    if (isShow) visibleCount++;
+  });
+  
+  emptyTip.style.display = visibleCount === 0 ? 'block' : 'none';
+  cardContainer.style.display = visibleCount === 0 ? 'none' : 'grid';
+}
+
+window.onload = loadLikeCount;
+</script>
 </body>
 </html>
