@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>海带的模3人物许愿池</title>
+  <title>海带岛档案馆</title>
   <style>
     * {
       margin: 0;
@@ -13,7 +13,7 @@
     }
 
     body {
-      background-color: #fcfcfc;
+      background-color: #fdfbfc;
       color: #333;
       padding: 15px;
       line-height: 1.6;
@@ -21,21 +21,34 @@
 
     .header {
       text-align: center;
-      margin: 30px 0;
+      margin: 40px 0;
       padding: 0 10px;
     }
 
     .header h1 {
-      font-size: 28px;
-      margin-bottom: 12px;
-      color: #6b7280;
-      font-weight: 600;
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #b992b8;
+      font-weight: 700;
+      letter-spacing: 2px;
     }
 
     .header p {
       font-size: 16px;
-      color: #9ca3af;
+      color: #a08a9b;
       margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #fff7fc;
+      border: 1px solid #f8d6e6;
+      border-radius: 16px;
+      padding: 14px 16px;
+      max-width: 600px;
+      margin: 0 auto 25px;
+      text-align: center;
+      color: #b87a9b;
+      font-size: 15px;
     }
 
     .social-links {
@@ -106,73 +119,57 @@
 
     .card {
       background: white;
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
       transition: all 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      border: 1px solid #f6f0f4;
     }
 
     .card-img {
       width: 100%;
-      height: 350px;
+      height: 360px;
       object-fit: cover;
-      border-bottom: 1px solid #f5f5f5;
     }
 
-    .card-info { padding: 18px; }
-    .card-name {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #6b7280;
-    }
-
-    .card-tags {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      color: #555;
-      font-weight: 500;
-      background: #f0f0f0;
-    }
-    .tag-year { background: #EEC2D4; color:#725665; }
-    .tag-noshare { background: #D095B0; color:#fff; }
-
-    .card-desc {
-      font-size: 14px;
-      color: #9ca3af;
+    .card-info {
+      padding: 16px;
+      font-size: 15px;
       line-height: 1.5;
-      margin-bottom: 12px;
     }
 
-    .like-btn {
-      display: inline-flex;
-      align-items: center;
+    /* 🔥 核心：严格中间一分为二，左右两列独立左对齐 */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 中间绝对平分 */
+      gap: 6px 0;
+    }
+    .info-col {
+      display: flex;
+      flex-direction: column;
       gap: 6px;
-      padding: 6px 12px;
-      border-radius: 20px;
-      background: #F9D9E3;
-      border: 1px solid #f1d2e0;
-      color: #886a79;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 14px;
     }
-    .like-btn:hover { background: #fce6ef; }
-    .like-btn.liked { background: #E8849F; border-color:#E8849F; color:#fff; }
+    .info-item {
+      color: #555;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+    .info-label {
+      color: #b992b8;
+      font-weight: 600;
+    }
 
-    .like-count { font-weight: 600; }
+    /* 一句话简介圆角标签 */
+    .card-desc {
+      margin-top: 12px;
+      padding: 6px 10px;
+      background: #f8e9f1;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: #725665;
+    }
+
     .footer {
       text-align: center;
       margin-top: 60px;
@@ -190,7 +187,7 @@
     }
 
     @media (max-width: 768px) {
-      .header h1 { font-size: 24px; }
+      .header h1 { font-size: 26px; }
       .container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:18px; }
       .card-img { height:320px; }
     }
@@ -199,8 +196,13 @@
 <body>
 
   <div class="header">
-    <h1>海带的模3人物许愿池</h1>
-    <p>高赞人物也许会出现在下载区哦~快来pick你的心动人物</p>
+    <h1>海带岛档案馆</h1>
+    <p>这里登记了海带创造的所有人物</p>
+
+    <div class="tip-box">
+      🏛️ 海带岛官方人物档案库<br>
+      收录全部原创角色 · 记录每一位居民的故事
+    </div>
 
     <div class="social-links">
       <a class="social-btn xiaohongshu" href="https://www.xiaohongshu.com/user/profile/6388c581000000001f015765" target="_blank">📕 小红书</a>
@@ -221,166 +223,163 @@
   <div class="empty-tip" id="emptyTip">暂无符合条件的人物~</div>
 
   <div class="container" id="cardContainer">
-    <div class="card" data-id="1" data-gender="girl" data-year="2026" data-share="noshare">
+    <div class="card" data-id="1" data-gender="girl" data-year="2026">
       <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peaOswn.png" alt="小蓝莓">
       <div class="card-info">
-        <div class="card-name">小蓝莓</div>
-        <div class="card-tags">
-          <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2026</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>小蓝莓</div>
+            <div class="info-item"><span class="info-label">种族：</span>仙子</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>海带岛</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 仙子 / 清透感，薄雾浆果</div>
-        <button class="like-btn" onclick="likeThis(this, 1)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">只在薄雾凌晨可见的神秘小仙女</div>
       </div>
     </div>
 
-    <div class="card" data-id="2" data-gender="girl" data-year="2026" data-share="noshare">
+    <div class="card" data-id="2" data-gender="girl" data-year="2026">
       <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peaj7RK.png" alt="可爱妹">
       <div class="card-info">
-        <div class="card-name">可爱妹</div>
-        <div class="card-tags">
-          <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2026</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>伊芙</div>
+            <div class="info-item"><span class="info-label">种族：</span>人类</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>月光瀑布</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 人类 / 可爱感，无糖牛奶巧克力</div>
-        <button class="like-btn" onclick="likeThis(this, 2)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">小甜点内心也想当大厨</div>
       </div>
     </div>
 
-    <div class="card" data-id="3" data-gender="girl" data-year="2026" data-share="noshare">
+    <div class="card" data-id="3" data-gender="girl" data-year="2026">
       <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peajqMD.md.png" alt="海音·德·拉罗什">
       <div class="card-info">
-        <div class="card-name">海音·德·拉罗什</div>
-        <div class="card-tags">
-         <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2026</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>海音·德·拉罗什</div>
+            <div class="info-item"><span class="info-label">种族：</span>人类</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>月光瀑布</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 人类 / 御姐，二代旁支</div>
-        <button class="like-btn" onclick="likeThis(this, 3)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">离家出走的公主误打误撞来到祖籍</div>
       </div>
     </div>
 
-    <div class="card" data-id="4" data-gender="girl" data-year="2025" data-share="noshare">
+    <div class="card" data-id="4" data-gender="girl" data-year="2025">
       <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peajHxO.png" alt="可可">
       <div class="card-info">
-        <div class="card-name">可可</div>
-        <div class="card-tags">
-          <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2025</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>可可</div>
+            <div class="info-item"><span class="info-label">种族：</span>人类</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>桥港</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 人类 / 海盐色，桥港公务员</div>
-        <button class="like-btn" onclick="likeThis(this, 4)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">在大城市当牛马千万别养狗</div>
       </div>
     </div>
 
-    <div class="card" data-id="5" data-gender="girl" data-year="2025" data-share="noshare">
+    <div class="card" data-id="5" data-gender="girl" data-year="2025">
       <img class="card-img" src="https://s41.ax1x.com/2026/04/09/peajoPx.md.png" alt="小美人鱼">
       <div class="card-info">
-        <div class="card-name">小美人鱼</div>
-        <div class="card-tags">
-          <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2025</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>小美人鱼</div>
+            <div class="info-item"><span class="info-label">种族：</span>人鱼</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>天堂岛</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 小美人鱼 / 天堂岛，小樱花出的cos</div>
-        <button class="like-btn" onclick="likeThis(this, 5)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">海洋的小公主其实是个COSER</div>
       </div>
     </div>
 
-    <div class="card" data-id="7" data-gender="girl" data-year="2025" data-share="noshare">
-      <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/kvOuzQcV.png" alt="戴娃">
+    <div class="card" data-id="7" data-gender="girl" data-year="2025">
+      <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/kvOuzQcV.png" alt="戴娃·卡塞尔">
       <div class="card-info">
-        <div class="card-name">戴娃</div>
-        <div class="card-tags">
-          <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2025</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>戴娃·卡塞尔</div>
+            <div class="info-item"><span class="info-label">种族：</span>人类</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>星光海岸</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 人类 /灵感缪斯，戴娃·卡塞尔</div>
-        <button class="like-btn" onclick="likeThis(this, 7)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">海带的灵感缪斯</div>
       </div>
     </div>
 
-    <div class="card" data-id="8" data-gender="girl" data-year="2025" data-share="noshare">
+    <div class="card" data-id="8" data-gender="girl" data-year="2025">
       <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/M8aeXmqJ.png" alt="真真">
       <div class="card-info">
-        <div class="card-name">真真</div>
-        <div class="card-tags">
-          <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2025</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>真真</div>
+            <div class="info-item"><span class="info-label">种族：</span>人类</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>双子溪</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 人类 /双子溪，落魄千金</div>
-        <button class="like-btn" onclick="likeThis(this, 8)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">世家千金破产沦落双子溪破屋</div>
       </div>
     </div>
 
-    <div class="card" data-id="9" data-gender="girl" data-year="2025" data-share="noshare">
+    <div class="card" data-id="9" data-gender="girl" data-year="2025">
       <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/C5f8tVLr.png" alt="埃拉拉·德·拉罗什">
       <div class="card-info">
-        <div class="card-name">埃拉拉·德·拉罗什</div>
-        <div class="card-tags">
-         <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2025</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>埃拉拉·德·拉罗什</div>
+            <div class="info-item"><span class="info-label">种族：</span>吸血鬼/巫师</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>维拉帕山谷</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 吸血鬼 / 巫师，二代继承人</div>
-        <button class="like-btn" onclick="likeThis(this, 9)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">十代家族二代继承人</div>
       </div>
     </div>
 
-    <div class="card" data-id="10" data-gender="girl" data-year="2025" data-share="noshare">
+    <div class="card" data-id="10" data-gender="girl" data-year="2025">
       <img class="card-img" src="https://s3.bmp.ovh/2026/04/09/CQPPMNE4.png" alt="塞拉菲娜·德·拉罗什">
       <div class="card-info">
-        <div class="card-name">塞拉菲娜·德·拉罗什</div>
-        <div class="card-tags">
-         <span class="tag tag-girl">女生</span>
-          <span class="tag tag-year">2025</span>
-          <span class="tag tag-style">原创人物</span>
-          <span class="tag tag-noshare">未分享</span>
+        <div class="info-grid">
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">姓名：</span>塞拉菲娜·德·拉罗什</div>
+            <div class="info-item"><span class="info-label">种族：</span>人类</div>
+          </div>
+          <div class="info-col">
+            <div class="info-item"><span class="info-label">性别：</span>女</div>
+            <div class="info-item"><span class="info-label">户籍：</span>维拉帕山谷</div>
+          </div>
         </div>
-        <div class="card-desc">原创 / 人类 / 修女，四代幺女</div>
-        <button class="like-btn" onclick="likeThis(this, 10)">❤️ <span class="like-count">0</span> 点赞</button>
+        <div class="card-desc">流落在外被教堂收养的十代家族四代幺女</div>
       </div>
     </div>
   </div>
 
-  <div class="footer">© 2026 海带的模3人物许愿池 | 个人捏人作品展示</div>
+  <div class="footer">© 2026 海带岛档案馆 | 模拟人生3原创人物档案</div>
 
 <script>
-// 点赞功能（纯本地稳定版，无接口，不报错，所有人可用）
-function likeThis(btn, id) {
-  const likedIds = JSON.parse(localStorage.getItem('likedCharacterIds') || '[]');
-  
-  if (likedIds.includes(id)) {
-    alert('你已经给这个人物点过赞啦～');
-    return;
-  }
-
-  likedIds.push(id);
-  localStorage.setItem('likedCharacterIds', JSON.stringify(likedIds));
-
-  const countEl = btn.querySelector('.like-count');
-  let count = parseInt(countEl.textContent) || 0;
-  countEl.textContent = count + 1;
-
-  btn.classList.add('liked');
-  btn.innerHTML = `❤️ <span class="like-count">${count + 1}</span> 已点赞`;
-  btn.disabled = true;
-}
-
 // 筛选功能
 function filter(type) {
   const cards = document.querySelectorAll('.card');
@@ -408,22 +407,6 @@ function filter(type) {
   emptyTip.style.display = visibleCount === 0 ? 'block' : 'none';
   cardContainer.style.display = visibleCount === 0 ? 'none' : 'grid';
 }
-
-// 页面加载时恢复已点赞状态
-window.onload = function() {
-  filter('all');
-  const likedIds = JSON.parse(localStorage.getItem('likedCharacterIds') || '[]');
-  likedIds.forEach(id => {
-    const btn = document.querySelector(`.card[data-id="${id}"] .like-btn`);
-    if (btn) {
-      const countEl = btn.querySelector('.like-count');
-      let count = parseInt(countEl.textContent) || 0;
-      btn.classList.add('liked');
-      btn.innerHTML = `❤️ <span class="like-count">${count}</span> 已点赞`;
-      btn.disabled = true;
-    }
-  });
-};
 </script>
 </body>
 </html>
